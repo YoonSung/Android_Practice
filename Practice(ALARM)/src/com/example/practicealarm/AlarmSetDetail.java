@@ -30,23 +30,24 @@ import android.widget.TimePicker.OnTimeChangedListener;
 
 public class AlarmSetDetail extends Activity implements OnDateChangedListener,
 		OnTimeChangedListener, OnClickListener, OnCheckedChangeListener {
-	private AlarmManager mManager;
-	private GregorianCalendar mCalendar;
-	private DatePicker mDate;
-	private TimePicker mTime;
-	private NotificationManager mNotification;
+	private AlarmManager alarmManager;
+	private GregorianCalendar gregorianCalendar;
+	private DatePicker datePicker;
+	private TimePicker timePicker;
+	private NotificationManager notificationManager;
+	private Common common;
 	
-	Button btn_set, btn_reset, mon, tue, wed, thu, fri, sat, sun;
-	TextView time;
+	Button btnSet, btnReset, mon, tue, wed, thu, fri, sat, sun;
+	TextView txtTime;
 	ArrayList<Integer> week;
 	Cursor cs;
-	boolean isupdate = false;
+	boolean isUpdate = false;
 	ContactDB db;
-	int req;
+	int requestId;
 	
-	int current_hour;
-	int current_minute;
-	CheckBox checkbox;
+	int currentHour;
+	int currentMinute;
+	CheckBox checkBox;
 	
 	
 	public void onCreate(Bundle savedInstanceState) {
@@ -54,15 +55,15 @@ public class AlarmSetDetail extends Activity implements OnDateChangedListener,
 		setContentView(R.layout.alarm);
 		
 		Intent intent = getIntent();
-		isupdate = intent.getBooleanExtra("isupdate",false);
-		req = intent.getIntExtra("id", -1);
+		isUpdate = intent.getBooleanExtra("isupdate",false);
+		requestId = intent.getIntExtra("id", -1);
 		//exception is not making
 		
-		time = (TextView)findViewById(R.id.time);
-		btn_reset = (Button) findViewById(R.id.reset);
-		btn_set = (Button) findViewById(R.id.set);
-		mDate = (DatePicker) findViewById(R.id.date_picker);
-		mTime = (TimePicker) findViewById(R.id.time_picker);
+		txtTime = (TextView)findViewById(R.id.time);
+		btnReset = (Button) findViewById(R.id.reset);
+		btnSet = (Button) findViewById(R.id.set);
+		datePicker = (DatePicker) findViewById(R.id.date_picker);
+		timePicker = (TimePicker) findViewById(R.id.time_picker);
 		
 		mon = (Button)findViewById(R.id.mon);
 		tue = (Button)findViewById(R.id.tue);
@@ -71,9 +72,11 @@ public class AlarmSetDetail extends Activity implements OnDateChangedListener,
 		fri = (Button)findViewById(R.id.fri);
 		sat = (Button)findViewById(R.id.sat);
 		sun = (Button)findViewById(R.id.sun);
+		checkBox = (CheckBox)findViewById(R.id.checkbox);
+		common = new Common(this);		
 		
-		checkbox = (CheckBox)findViewById(R.id.checkbox);
-		checkbox.setOnCheckedChangeListener(this);
+		
+		checkBox.setOnCheckedChangeListener(this);
 		
 		mon.setOnClickListener(this);
 		tue.setOnClickListener(this);
@@ -84,22 +87,22 @@ public class AlarmSetDetail extends Activity implements OnDateChangedListener,
 		sun.setOnClickListener(this);
 		
 		
-		btn_set.setOnClickListener(this);
-		btn_reset.setOnClickListener(this);
+		btnSet.setOnClickListener(this);
+		btnReset.setOnClickListener(this);
 		
 		
 		//Log.i("HelloAlarmActivity", mCalendar.getTime().toString());
 		
-		mNotification = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-		mManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-		mCalendar = new GregorianCalendar();
+		notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+		alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+		gregorianCalendar = new GregorianCalendar();
 		
-		mDate.init(mCalendar.get(Calendar.YEAR), mCalendar.get(Calendar.MONTH),
-				   mCalendar.get(Calendar.DAY_OF_MONTH), this);
+		datePicker.init(gregorianCalendar.get(Calendar.YEAR), gregorianCalendar.get(Calendar.MONTH),
+				   gregorianCalendar.get(Calendar.DAY_OF_MONTH), this);
 		
-		mTime.setCurrentHour(mCalendar.get(Calendar.HOUR_OF_DAY));
-		mTime.setCurrentMinute(mCalendar.get(Calendar.MINUTE));
-		mTime.setOnTimeChangedListener(this);
+		timePicker.setCurrentHour(gregorianCalendar.get(Calendar.HOUR_OF_DAY));
+		timePicker.setCurrentMinute(gregorianCalendar.get(Calendar.MINUTE));
+		timePicker.setOnTimeChangedListener(this);
 		
 		
 		week = new ArrayList<Integer>(Arrays.asList(0,0,0,0,0,0,0));
@@ -107,16 +110,15 @@ public class AlarmSetDetail extends Activity implements OnDateChangedListener,
 		db = new ContactDB(this);
 		db.open();
 		
-		Toast.makeText(this, "isupdate : "+isupdate + "  \\  request : "+req, 2000).show();
+		Toast.makeText(this, "isupdate : "+isUpdate + "  \\  request : "+requestId, 2000).show();
 		
-		if(isupdate==true){
-			cs = db.selectIDAlarm(""+req);
+		if(isUpdate==true){
+			cs = db.selectIDAlarm(""+requestId);
 			cs.moveToFirst();
-			req = cs.getInt(1);
+			requestId = cs.getInt(1);
 			
-			
-			mTime.setCurrentHour(cs.getInt(3));
-			mTime.setCurrentMinute(cs.getInt(4));
+			timePicker.setCurrentHour(cs.getInt(3));
+			timePicker.setCurrentMinute(cs.getInt(4));
 			
 			week.set(0, cs.getInt(5));
 			week.set(1, cs.getInt(6));
@@ -133,69 +135,26 @@ public class AlarmSetDetail extends Activity implements OnDateChangedListener,
 				week.get(4)==1 &&
 				week.get(5)==1 &&
 				week.get(6)==1) {
-				checkbox.setChecked(true);
-				System.out.println("need to check !! ");
-			}
-			
-			for (int i = 0; i < 7; i++) {
-				System.out.println("week.get("+i+")= "+week.get(i));
+				checkBox.setChecked(true);
 			}
 			
 			checkAllButton();
-			/*
-	public Cursor selectAllAlarm(){
-		return mDB.query(ALARM_TABLE, new String[]
-				{ALARM_ID,
-				ALARM_REQUEST, 
-				ALARM_GROUP, 
-				ALARM_ACTIVATE,
-				ALARM_HOUR,
-				ALARM_MINUTE,
-				ALARM_MON,
-				ALARM_TUE,
-				ALARM_WED,
-				ALARM_THU,
-				ALARM_FRI,
-				ALARM_SAT,
-				ALARM_SUN
-				}, null, null, null, null, null);
-	} 
-			 */
+
 		}else{
 			cs = db.selectAllAlarm();
-			req = cs.getCount()+1;
+			requestId = cs.getCount()+1;
 		}
 	}
 
-	private void setAlarm() {
-		//alarm repeating everyday(24*60*60*1000)
-		mManager.setRepeating(AlarmManager.RTC_WAKEUP,
-				mCalendar.getTimeInMillis(), 10 * 1000, pendingIntent());//24*60*60*1000
-		Log.i("HelloAlarmActivity", mCalendar.getTime().toString());
-	}
-
-	private void resetAlarm() {
-		mManager.cancel(pendingIntent());
-	}	
-	
-	private PendingIntent pendingIntent() {
-
-		Intent i = new Intent(this, AlarmService.class);
-		
-		PendingIntent pi = PendingIntent.getBroadcast(this, 0, i,
-                PendingIntent.FLAG_UPDATE_CURRENT);
-		return pi;
-	}
-
 	public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-		mCalendar.set(year, monthOfYear, dayOfMonth, mTime.getCurrentHour(),
-				mTime.getCurrentMinute());
+		gregorianCalendar.set(year, monthOfYear, dayOfMonth, timePicker.getCurrentHour(),
+				timePicker.getCurrentMinute());
 	}
 
 	public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
 		
-		current_hour = hourOfDay;
-		current_minute = minute;
+		currentHour = hourOfDay;
+		currentMinute = minute;
 		
 		String half = "오전";
 		String hour = ""+hourOfDay;
@@ -211,8 +170,8 @@ public class AlarmSetDetail extends Activity implements OnDateChangedListener,
 			min = "0"+minute;
 		}
 
-		time.setText(half+" "+hour+":"+min);
-		mCalendar.set(mDate.getYear(), mDate.getMonth(), mDate.getDayOfMonth(),
+		txtTime.setText(half+" "+hour+":"+min);
+		gregorianCalendar.set(datePicker.getYear(), datePicker.getMonth(), datePicker.getDayOfMonth(),
 				hourOfDay, minute);
 	}
 
@@ -240,18 +199,17 @@ public class AlarmSetDetail extends Activity implements OnDateChangedListener,
 			uncheckButton(fri);
 			uncheckButton(sat);
 			uncheckButton(sun);
-			checkbox.setChecked(false);
+			checkBox.setChecked(false);
 			
-			mCalendar = new GregorianCalendar();
-			mTime.setCurrentHour(mCalendar.get(Calendar.HOUR_OF_DAY));
-			mTime.setCurrentMinute(mCalendar.get(Calendar.MINUTE));
+			gregorianCalendar = new GregorianCalendar();
+			timePicker.setCurrentHour(gregorianCalendar.get(Calendar.HOUR_OF_DAY));
+			timePicker.setCurrentMinute(gregorianCalendar.get(Calendar.MINUTE));
 			
-			resetAlarm();
 			break;
 		case R.id.set :
-			if(!isupdate){
-				System.out.println("insert : "+req);
-				long result = db.insertAlarm( req, 1, current_hour, current_minute,
+			if(!isUpdate){
+				System.out.println("insert : "+requestId);
+				db.insertAlarm( requestId, 1, currentHour, currentMinute,
 						
 								   week.get(0).intValue(), 
 								   week.get(1).intValue(),
@@ -263,7 +221,7 @@ public class AlarmSetDetail extends Activity implements OnDateChangedListener,
 				startActivity(new Intent(this, AlarmLayout.class));
 				finish();
 			}else{
-				db.updateAlarm(req, 1, current_hour, current_minute,
+				db.updateAlarm(requestId, 1, currentHour, currentMinute,
 						
 								   week.get(0).intValue(), 
 								   week.get(1).intValue(),
@@ -275,7 +233,10 @@ public class AlarmSetDetail extends Activity implements OnDateChangedListener,
 				startActivity(new Intent(this, AlarmLayout.class));
 				finish();
 			}
-			setAlarm();
+			
+			//set alarm
+			common.setNoticeAlarm(gregorianCalendar, requestId);
+			
 			break;
 		case R.id.mon :
 			changeButton(0, mon);

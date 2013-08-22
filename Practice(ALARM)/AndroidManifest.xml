@@ -24,7 +24,8 @@
         </activity>
          <activity android:name="AlarmLayout"></activity>
         <activity android:name="AlarmSetDetail"></activity>
-        
+        <receiver android:name="AlarmService" >
+        </receiver>
     </application>
 
 </manifest>

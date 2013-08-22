@@ -99,21 +99,10 @@ public class AlarmLayout extends Activity {
 			}
 
 		}
-		// new Alarm(this, "??????", 1);
-		// new Alarm(this, "??????", 1);
-		// new Alarm(this, "??????", 1);
-
 		top_2.addView(top_3, top_3_param);
-		// new Alarm(this, "??????", 1);
 		entire_top.addView(top_1, top_1_param);
 		entire_top.addView(top_2, top_2_param);
-		// entire_top.addView(top_3, top_3_param);
-
 		setContentView(entire_top, entire_top_param);
-		
-		
-		
-		
 	}
 
 	@Override
@@ -151,21 +140,7 @@ public class AlarmLayout extends Activity {
 			
 			cs = db.selectIDAlarm(""+request);
 			cs.moveToFirst();
-/*
- 				{ALARM_ID, 
-				ALARM_REQUEST, 
-				ALARM_GROUP, 
-				ALARM_ACTIVATE,
-				ALARM_HOUR,
-				ALARM_MINUTE,
-				ALARM_MON,
-				ALARM_TUE,
-				ALARM_WED,
-				ALARM_THU,
-				ALARM_FRI,
-				ALARM_SAT,
-				ALARM_SUN
- */
+
 			// alarm content
 			alarm_top = new LinearLayout(context);
 			alarm_top.setOrientation(LinearLayout.HORIZONTAL);
@@ -229,10 +204,6 @@ public class AlarmLayout extends Activity {
 			alarm_content_bottom_param = new LinearLayout.LayoutParams(
 					match_parent, wrap_content);
 
-			// ??????
-			
-			
-			
 			img_param = new LinearLayout.LayoutParams(wrap_content,
 					wrap_content);
 			img_param.setMargins(5,5,5,5);
@@ -306,7 +277,6 @@ public class AlarmLayout extends Activity {
 			alarm_button = new Button(context);
 			alarm_button.setOnClickListener(this);
 			alarm_button.setTag("ALARM");
-			//alarm_button.setText("??????????");
 			
 			if(cs.getInt(3)==0){
 				alarm_button.setBackgroundResource(R.drawable.clocksleep);
@@ -369,9 +339,9 @@ public class AlarmLayout extends Activity {
 		}
 
 		@Override
-		public boolean onLongClick(View arg0) {
+		public boolean onLongClick(View v) {
 			new AlertDialog.Builder(context)
-			//.setIcon(R.drawable.ic_launcher) //kakao?? ???? 
+			//.setIcon(R.drawable.ic_launcher) 
 			.setTitle("알람을 삭제하시겠습니까?")
 			.setPositiveButton("삭제", new DialogInterface.OnClickListener() {
 				@Override
