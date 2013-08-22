@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <ListView
+        android:id="@+id/TestSafetyTime_list"
+        android:layout_width="match_parent"
+        android:layout_height="0px"
+        android:layout_weight="1"
+        android:background="#000" >
+    </ListView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <EditText
+                android:id="@+id/TestSafetyTime_edtInsert1"
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:hint="startH"
+                android:numeric="integer" />
+
+            <EditText
+                android:id="@+id/TestSafetyTime_edtInsert2"
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:hint="startM"
+                android:numeric="integer" />
+            
+             <EditText
+                android:id="@+id/TestSafetyTime_edtInsert3"
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:hint="endH"
+                android:numeric="integer" />
+
+            <EditText
+                android:id="@+id/TestSafetyTime_edtInsert4"
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:hint="endM"
+                android:numeric="integer" />
+            
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/TestSafetyTime_btnInsert"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="insert" />
+
+        <EditText
+            android:id="@+id/TestSafetyTime_edtUpdate1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="want to update _id number"
+            android:numeric="integer" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+           <EditText
+                android:id="@+id/TestSafetyTime_edtUpdate2"
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:hint="startH"
+                android:numeric="integer" />
+
+            <EditText
+                android:id="@+id/TestSafetyTime_edtUpdate3"
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:hint="startM"
+                android:numeric="integer" />
+            
+             <EditText
+                android:id="@+id/TestSafetyTime_edtUpdate4"
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:hint="endH"
+                android:numeric="integer" />
+
+            <EditText
+                android:id="@+id/TestSafetyTime_edtUpdate5"
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:hint="endM"
+                android:numeric="integer" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/TestSafetyTime_btnUpdate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="update" />
+
+        <EditText
+            android:id="@+id/TestSafetyTime_edtDelete"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:ems="10"
+            android:hint="want to delete _id number"
+            android:numeric="integer" >
+
+            <requestFocus />
+        </EditText>
+
+        <Button
+            android:id="@+id/TestSafetyTime_btnDelete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="delete" />
+    </LinearLayout>
+
+</LinearLayout>

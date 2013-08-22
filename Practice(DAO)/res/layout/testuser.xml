@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <ListView
+        android:id="@+id/TestUser_list"
+        android:layout_width="match_parent"
+        android:layout_height="0px"
+        android:layout_weight="1"
+        android:background="#000" >
+    </ListView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <EditText
+                android:id="@+id/TestUser_edtInsert1"
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:hint="name" />
+
+            <EditText
+                android:id="@+id/TestUser_edtInsert2"
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:hint="number"
+                android:numeric="integer" />
+
+            <EditText
+                android:id="@+id/TestUser_edtInsert3"
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:hint="allow"
+                android:numeric="integer" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/TestUser_btnInsert"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="insert" />
+
+        <EditText
+            android:id="@+id/TestUser_edtUpdate1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="want to update _id number"
+            android:numeric="integer" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <EditText
+                android:id="@+id/TestUser_edtUpdate2"
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:hint="name" />
+
+            <EditText
+                android:id="@+id/TestUser_edtUpdate3"
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:hint="number"
+                android:numeric="integer" />
+
+            <EditText
+                android:id="@+id/TestUser_edtUpdate4"
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:hint="allow"
+                android:numeric="integer" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/TestUser_btnUpdate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="update" />
+
+        <EditText
+            android:id="@+id/TestUser_edtDelete"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:ems="10"
+            android:hint="want to delete _id number"
+            android:numeric="integer" >
+
+            <requestFocus />
+        </EditText>
+
+        <Button
+            android:id="@+id/TestUser_btnDelete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="delete" />
+    </LinearLayout>
+
+</LinearLayout>
