@@ -39,7 +39,8 @@ public class Main extends Activity implements OnClickListener, AnimationListener
 		((LinearLayout)findViewById(R.id.word1)).setAnimation(animation1);
 		((LinearLayout)findViewById(R.id.word1)).startAnimation(animation1);
 	}
-
+//http://blog.naver.com/ggaddr?Redirect=Log&logNo=20123287802
+//http://dmh11.tistory.com/75
 	@Override
 	public void onAnimationEnd(Animation animation) {
 		if (animation==animation1) {
@@ -59,7 +60,7 @@ public class Main extends Activity implements OnClickListener, AnimationListener
 			isBackOfCardShowing=!isBackOfCardShowing;
 			findViewById(R.id.button1).setEnabled(true);
 		}
-	}
+	} 
 
 	@Override
 	public void onAnimationRepeat(Animation animation) {
