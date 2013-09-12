@@ -10,10 +10,8 @@ import java.net.URLEncoder;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
-
 import android.app.Activity;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -29,6 +27,7 @@ public class MainActivity extends Activity implements OnClickListener{
 	String searchInfo = null;
 	String link = null;
 	String thumbNail = null;
+	Drawable drawable;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -50,10 +49,12 @@ public class MainActivity extends Activity implements OnClickListener{
 				@Override
 				public void run() {
 					searchImage();
+//					drawable = LoadImageFromWebOperations("http://img.naver.net/static/www/u/2013/0819/nmms_111143893.gif");
+					drawable = LoadImageFromWebOperations(thumbNail);
 				}
 			}).start();
 		} else {
-			
+			btnTarget.setImageDrawable(drawable);
 		}
 	}
 	private void searchImage() {
@@ -61,7 +62,7 @@ public class MainActivity extends Activity implements OnClickListener{
 		
 		/////////////////////////////////////////////////
 		try {
-			searchInfo = URLEncoder.encode("¥‹æÓ", "UTF8");
+			searchInfo = URLEncoder.encode("ÏÇ¨Í≥º", "UTF8");
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
@@ -94,7 +95,6 @@ public class MainActivity extends Activity implements OnClickListener{
 					break;
 				}
 				parseEvent = parser.next();
-				//¥Ÿ¿Ω µ•¿Ã≈Õ∑Œ ≥—æÓ∞£¥Ÿ. end_document¿œ∂ß±Ó¡ˆ
 			}
 			
 		} catch (MalformedURLException e) {
